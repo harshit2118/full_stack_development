@@ -1,4 +1,5 @@
 #clockCase{
+    position: relative;
     background-color: rgb(160, 29, 112);
     height: 30vw ;
     width:  30vw;
@@ -11,23 +12,25 @@
     position: absolute;
     background-color: black;
     border-radius: 10px;
+    transform-origin: bottom;
 }
 #hour{
-    height: 10.5%;
+    height: 19.5%;
     width: 1%;
-    top: 7.3%;
-    left: 49.2%;
+    top: 33.1%;
+    left: 49%;
 }
 #minute{
-    height: 13.5%;
+    height: 28.5%;
     width: .6%;
-    top: 4.3%;
-    left: 49.345%;
+    top: 16.9%;
+    left: 49.2%;
+    opacity: 0.3;
 }
 #second{
-    background-color: lightblue;
-    height: 13.5%;
+    background-color: red;
+    height: 35.5%;
     width: .2%;
-    top: 4.3%;
+    top: 15.3%;
     left: 49.54%;
 }

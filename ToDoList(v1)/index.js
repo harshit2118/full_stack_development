@@ -19,7 +19,7 @@ app.get("/",(req,res)=>{
     res.render("list",{
         kindOfday: today,
         addItems  : items
-    });//updated on ejs file on view folder
+    });//render inside list.ejs file on view folder
 });
 
 app.post("/",(req,res)=>{

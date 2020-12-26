@@ -1,0 +1,72 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    background-color: blueviolet;
+}
+.heading{
+    text-align: center;
+    color: black;
+    background-color: blueviolet
+}
+.container{
+     position: relative;
+     margin: 0 auto 0 auto;
+     margin-top: 10%;
+     padding: 30px;
+     height: auto;
+     width : 480px;
+     border-radius: 10px;
+     background-color: white;
+     box-shadow: 2px -1px 2px 2px rgb(53, 45, 45);
+}
+.date_container{
+    text-align: center;
+    font-family: Showcard Gothic, fantasy;
+}
+.input_container{
+    margin-top: 30px;
+    font-size: large;
+    text-align: center;
+    font-family: Haettenschweiler;
+}
+.new_task{
+    min-height: 7px;
+    margin-bottom: 0px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid black;
+    font-size: 40px;
+}
+.add_list{
+    margin-top: 15px;
+    border:3px solid purple;
+    padding: 5px;
+    border-radius: 30px;
+    text-align:right;
+}
+input:checked+p{
+    text-decoration: line-through;
+    opacity: .4;
+}
+input[type="checkbox"]{
+    margin: 20px;
+    margin-right: 36%;
+}
+input[type="text"]{
+    text-align:center;
+}
+.add_list:focus{
+    outline: none;
+}
+.btn_1{
+    margin-left:5px;
+    color: black;
+    font-family: Copperplate, fantasy;
+    padding:15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius:30px;
+    box-shadow: 2px -1px 2px 2px rgb(53, 45, 45);
+}

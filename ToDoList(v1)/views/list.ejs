@@ -11,13 +11,16 @@
     <div class="date_container">
         <h1><%= listTitle %></h1>
     </div>
-    <div class="input_container">
-        <%for(var i=0; i<=addItems.length;i++){%>
-            <div class="new_task">
-                <input type="checkbox">
-                <p><%=addItems[i]%></p>
-            </div>
-        <%}%>
+    <form action="/delete" method="post">
+        <div class="input_container">
+            <%addItems.forEach((x)=>{%>
+                <div class="new_task">
+                    <input type="checkbox" name="checkbox" value="<%=x._id%>" onChange="this.form.submit()">
+                    <p><%=x.task %></p>
+                </div>
+            <%});%>
+    </form>
+    
         <form action="/" method="post">
             <input type="text" name="add_item" class="add_list" placeholder="What to Do?" autocomplete="off">
             <button type="submit"  name="Add"  class="btn_1" value=<%=listTitle%>>ADD</button>

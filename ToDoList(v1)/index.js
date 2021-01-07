@@ -1,3 +1,4 @@
+//jshint esversion:6
 const express = require("express");
 const bodyParser = require("body-parser");
 const date = require(__dirname+"/mods/Date.js"); 
@@ -21,10 +22,17 @@ app.get("/",(req,res)=>{
     });//render inside list.ejs file on view folder
 });
 
+app.get("/work",(req,res)=>{
+    res.render("list",{
+        listTitle: "Work List",
+        addItems  : items_work
+    });
+});
+
 app.post("/",(req,res)=>{
     if(req.body.Add==="Work"){
         items_work.push(req.body.add_item);
-        res.redirect("/work")
+        res.redirect("/work");
     }
     else{
         items.push(req.body.add_item);
@@ -32,12 +40,6 @@ app.post("/",(req,res)=>{
     }
 });
 
-app.get("/work",(req,res)=>{
-    res.render("list",{
-        listTitle: "Work List",
-        addItems  : items_work
-    });
-});
 app.post("/work",(req,res)=>{
     res.redirect("/home");
 });

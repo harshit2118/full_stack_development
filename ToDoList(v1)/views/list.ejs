@@ -19,11 +19,12 @@
                     <p><%=x.task %></p>
                 </div>
             <%});%>
+            <input type="hidden" name="listName" value="<%=listTitle%>">
     </form>
     
         <form action="/" method="post">
             <input type="text" name="add_item" class="add_list" placeholder="What to Do?" autocomplete="off">
-            <button type="submit"  name="Add"  class="btn_1" value=<%=listTitle%>>ADD</button>
+            <button type="submit"  name="add_list"  class="btn_1" value=<%=listTitle%>>ADD</button>
         </form>
     </div>
 </div>    

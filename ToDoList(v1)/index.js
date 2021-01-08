@@ -2,6 +2,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const date = require(__dirname+"/mods/Date.js"); 
+const _ = require("lodash");
 const app  = express();
 const mongoose = require("mongoose");
 const url      = "mongodb://localhost:27017/todolistDB";
@@ -34,8 +35,18 @@ const t3 =new Task({
 });
 
 const tasks_items = [t1,t2,t3];
+
+//Creating list schema
+const listSchema = new mongoose.Schema({
+    Name : String,
+    items : [itemSchema]
+});
+const List = new mongoose.model("List",listSchema);
+
 //Setting ejs as a view engine
 app.set('view engine','ejs');
+
+//All get Methods
 
 app.get("/",(req,res)=>{
     Task.find({},(err,tasks)=>{
@@ -58,60 +69,89 @@ app.get("/",(req,res)=>{
             });//render inside list.ejs file on view folder
         }
     );
-    let today=date.getWeekDay()+", "+date.getDaysNo();
-    
 });
 
-app.get("/work",(req,res)=>{
-    res.render("list",{
-        listTitle: "Work List",
-        addItems  : items_work
+app.get("/:customListTitle",(req,res)=>{
+    const customListTitle = _.capitalize(req.params.customListTitle);
+    
+    List.findOne({Name: customListTitle}, (err,foundList)=>{
+        if(!err){
+            if(!foundList){
+                const list = new List({
+                    Name  : customListTitle,
+                    items : tasks_items
+                }); 
+                list.save((err)=>{
+                    if(!err){
+                        console.log("Item added");
+                    }
+                });
+                res.redirect("/"+customListTitle);
+            }
+            else{
+                res.render("list",{
+                    listTitle : foundList.Name,
+                    addItems  : foundList.items
+                });
+            }
+            
+        }
     });
 });
 
-app.post("/",(req,res)=>{
-    if(req.body.Add==="Work"){
-        const addtask = Task({
-            task : req.body.add_item
-        });
-        addtask.save((err)=>{
-            if(err){
-                console.log(err);
-            }
-            else{
-                console.log("New task added");
-            }
-        });
-        res.redirect("/work");
-    }
-    else{
-        const addtask = Task({
-            task : req.body.add_item
-        });
-        addtask.save((err)=>{
-            if(err){
-                console.log(err);
-            }
-            else{
-                console.log("New task added");
-            }
-        });
-        res.redirect("/");
-    }
-});
 
-app.post("/work",(req,res)=>{
-    res.redirect("/home");
+//All post Methods
+
+app.post("/",(req,res)=>{
+    const taskName = req.body.add_item;
+    const listName = req.body.add_list;
+        
+        const addtask = Task({
+            task : req.body.add_item
+        });
+        if(listName==="Today")
+        {
+            addtask.save((err)=>{
+                if(err)
+                {
+                    console.log(err);
+                }
+            });
+            res.redirect("/");
+        }
+        else{
+            List.findOne({Name: listName},(err,foundList)=>{
+                foundList.items.push(addtask);
+                foundList.save((err)=>{
+                    console.log(err);
+                });
+                res.redirect("/"+listName);            
+            });
+        }
 });
 
 app.post("/delete",(req,res)=>{
     const removeTASK = req.body.checkbox;
-    Task.findByIdAndRemove(removeTASK,(err)=>{
-        console.log(err);
-    });
-    res.redirect("/");
+    const ListName   = req.body.listName;
+
+    if(ListName==="Today"){
+        Task.findByIdAndRemove(removeTASK,(err)=>{
+            console.log(err);
+        });
+        res.redirect("/");
+    }
+    else{
+        List.findOneAndUpdate({Name:ListName},{$pull:{items:{_id: removeTASK}}},(err,foundList)=>{
+            if(!err){
+                res.redirect("/"+ListName);
+            }
+        });
+    }
+    
 
 });
+
+//Starting a local server
 app.listen(3000,()=>{
     console.log("server is started at port 3000");
 });

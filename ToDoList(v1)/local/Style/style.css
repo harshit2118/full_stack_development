@@ -44,6 +44,7 @@ body{
     border:3px solid purple;
     padding: 5px;
     border-radius: 30px;
+    box-shadow: 2px 2px 2px grey;
     text-align:right;
 }
 input:checked+p{
@@ -53,6 +54,7 @@ input:checked+p{
 input[type="checkbox"]{
     margin: 20px;
     margin-right: 36%;
+    box-shadow: 1px 1px 2px grey;
 }
 input[type="text"]{
     text-align:center;
@@ -69,4 +71,10 @@ input[type="text"]{
     padding-bottom: 5px;
     border-radius:30px;
     box-shadow: 2px -1px 2px 2px rgb(53, 45, 45);
+}
+.btn_1:focus{
+    color: brown;
+    border: none;
+    outline: none;
+
 }
